@@ -73,9 +73,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 1326.8003932035863,
-			"y": -1610.4547358603527,
-			"lastActivityTimestamp": 1745427352143,
+			"x": -3669.2333378843273,
+			"y": -2185.222539604259,
+			"lastActivityTimestamp": 0,
 			"meta": {}
 		},
 		{
@@ -829,9 +829,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 74.42910084369282,
-			"y": 1769.7145509217162,
-			"z": 0.5190679878730103,
+			"x": 3669.2333378843273,
+			"y": 2185.222539604259,
+			"z": 0.11481516505618215,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1596,9 +1596,7 @@
 		{
 			"editingShapeId": null,
 			"croppingShapeId": null,
-			"selectedShapeIds": [
-				"shape:ArXJIWVS7V-h15KBi5krs"
-			],
+			"selectedShapeIds": [],
 			"hoveredShapeId": null,
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
@@ -2718,8 +2716,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 678.7950576427352,
-			"y": 1312.6215355069317,
+			"x": 726.3161089701681,
+			"y": 1319.043321445838,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -3381,11 +3379,7 @@
 		{
 			"followingUserId": null,
 			"opacityForNextShape": 1,
-			"stylesForNextShape": {
-				"tldraw:geo": "ellipse",
-				"tldraw:dash": "solid",
-				"tldraw:size": "m"
-			},
+			"stylesForNextShape": {},
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
@@ -3417,7 +3411,7 @@
 			"isFocused": true,
 			"devicePixelRatio": 1.5,
 			"isCoarsePointer": false,
-			"isHoveringCanvas": true,
+			"isHoveringCanvas": null,
 			"openMenus": [],
 			"isChangingStyle": false,
 			"isReadonly": false,

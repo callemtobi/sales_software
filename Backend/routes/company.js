@@ -1,0 +1,59 @@
+import { Router } from "express";
+import _ from 'lodash';
+import Product from "../models/Product.js";
+import Company from "../models/Company.js";
+
+const router = Router();
+
+// ------------- GET Routes
+router.get('/', async (req, res) => {
+
+    // try{
+    //     const comp = await Company.findOne({name: companyName});
+
+    //     if (comp) {
+    //         res.render('company', {companyName: companyName || "Company Name"})
+    //         // res.status(200).json(comp);
+    //     } else {res.status(400).json('Company not found')}
+    // } catch(err) {
+    //     console.log('-----------> Error occured: ' + err);
+    //     res.status(401).json('There has been an error!!!' + err)
+    // }
+
+    res.render('company');
+})
+
+router.get('/:compID', async (req, res) => {
+    
+    const companyID = req.params.compID;
+    console.log(`Company ID: ${companyID}`);
+    
+    try{
+        const comp = await Company.findById(companyID)
+        .populate('products');
+
+        if (comp) {
+            res.render('company', {comp: comp, products: comp.products});
+            // res.status(200).json(comp);
+        } else {res.status(404).json('Company not found')}
+    } catch(err) {
+        console.log('-----------> Error occured: ' + err);
+        res.status(500).json('There has been an error!!!' + err)
+    }
+})
+
+// ------------- POST Routes
+router.post('/add', async (req, res) => {
+    const {name, coreProduct, desc, products } = req.body;
+    const newCompany = new Company({name, coreProduct, desc, products});
+
+    try {
+        const addCompany = await newCompany.save();
+        res.status(200).json(addCompany);
+    } catch(err) {
+        res.status(404).json(err);
+    }
+})
+
+
+export default router;

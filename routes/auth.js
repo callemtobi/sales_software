@@ -21,8 +21,9 @@ router.post('/login', async (req, res) => {
         if (!user) { res.status(401).json('User not found.') }
         else if (user) {
             if (password === user.password) {
+                res.redirect('/company')
                 console.log('------> Successfull login');
-                res.status(200).json('You are logged in.');
+                // res.status(200).json('You are logged in.');
             } else {
                 console.log('------> Incorrect password.');
                 res.status(401).json('Incorrect password.');
@@ -33,7 +34,6 @@ router.post('/login', async (req, res) => {
     }
 
 })
-
 router.post('/register', async (req, res) => {
     const {username, email, password} = req.body;
     const user = new User({username, email, password});

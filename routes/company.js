@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     //     res.status(401).json('There has been an error!!!' + err)
     // }
 
-    res.render('company');
+    res.redirect('/products');
 })
 
 router.get('/:compID', async (req, res) => {

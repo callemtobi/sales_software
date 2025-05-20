@@ -43,17 +43,22 @@ router.get('/:compID', async (req, res) => {
 })
 
 // ------------- POST Routes
-router.post('/add', async (req, res) => {
-    const {name, coreProduct, desc, products } = req.body;
-    const newCompany = new Company({name, coreProduct, desc, products});
+// router.route('/add')
+//     .get(async (req, res) => {
+//         res.render('companyDash');
+//     })
+    // .post(async (req, res) => {
+        // const {compName, compDesc, compImg, coreProd } = req.body;
 
-    try {
-        const addCompany = await newCompany.save();
-        res.status(200).json(addCompany);
-    } catch(err) {
-        res.status(404).json(err);
-    }
-})
+        // const newCompany = new Company({compName, compDesc, compImg, coreProd});
+
+        // try {
+            // const addCompany = await newCompany.save();
+        //     res.status(200).json(addCompany);
+        // } catch(err) {
+        //     res.status(404).json(err);
+        // }
+    // })
 
 
 export default router;

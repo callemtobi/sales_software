@@ -31,7 +31,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Create product
+// Add, Manage and Delete products
+// Add Company
 router.route('/add')
     .get(async (req, res) => {        
         try {
@@ -126,7 +127,7 @@ router.post('/delete/:id', async (req, res) => {
             if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
         }
 
-        res.redirect('/products');
+        res.redirect('/products/add');
     } catch (err) {
         return res.status(400).json(err + "Error deleting product");
     }

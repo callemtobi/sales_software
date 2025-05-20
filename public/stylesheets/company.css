@@ -181,7 +181,7 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 .hero {
-    background-image: url('../images/company/Back\ pic.jpg'); /* path to your background image */
+    /* background-image: url('../images/company/Back\ pic.jpg'); path to your background image */
     background-size: cover; /* make the image cover the whole section */
     background-position: center; /* center the image */
     background-repeat: no-repeat; /* no repeating */

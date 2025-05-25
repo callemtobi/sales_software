@@ -1,5 +1,8 @@
 import { Router } from "express";
+import session from "express-session";
+
 import User from "../models/User.js";
+import { verifyUser } from "./verify.js";
 
 const router = Router();
 
@@ -15,14 +18,19 @@ router.get('/register', (req, res) => {
 // ------------- POST Routes
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
-
+    
     try {
         const user = await User.findOne({email: email});
         if (!user) { res.status(401).json('User not found.') }
         else if (user) {
             if (password === user.password) {
-                res.redirect('/company')
+
+                // Set session variable
+                req.session.isLoggedIn = true;
+                req.session.user = { id: user._id, email: user.email };
+
                 console.log('------> Successfull login');
+                res.redirect('/home')
                 // res.status(200).json('You are logged in.');
             } else {
                 console.log('------> Incorrect password.');
@@ -45,14 +53,14 @@ router.post('/register', async (req, res) => {
             await User.insertOne(user);
             console.log('----> User registered');
             // return res.status(200).json('You have been registered.');
-            // return res.redirect('/home');
+            return res.redirect('/auth/login');
         } else if (userExists.username === user.username) {
             console.log('----> User with that username exists.');
-            // return res.status(401).json('User with that username exists.');
+            return res.status(401).json('User with that username exists.');
             // return res.redirect('/auth/register');
         } else if (userExists.email === user.email) {
             console.log('----> User with that email exists.');
-            // return res.status(401).json('User with that email exists.');
+            return res.status(401).json('User with that email exists.');
             // return res.redirect('/auth/register');
         } else { 
             console.log('-------->Error')
@@ -62,6 +70,11 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         console.log('Error occured: ' + err);
     }
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/home');
 })
 
 export default router;

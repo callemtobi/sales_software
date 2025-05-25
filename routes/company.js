@@ -2,6 +2,7 @@ import { Router } from "express";
 import _ from 'lodash';
 import Product from "../models/Product.js";
 import Company from "../models/Company.js";
+import { verifyUser } from "./verify.js";
 
 const router = Router();
 
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
     res.redirect('/products');
 })
 
-router.get('/:compID', async (req, res) => {
+router.get('/:compID', verifyUser, async (req, res) => {
     
     const companyID = req.params.compID;
     console.log(`Company ID: ${companyID}`);

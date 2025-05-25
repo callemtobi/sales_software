@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Product from "../models/Product.js";
 import Company from "../models/Company.js";
+import { verifyUser } from "./verify.js";
 import multer from "multer";
 import _ from "lodash";
 import fs from 'fs';
@@ -34,7 +35,7 @@ router.get('/', async (req, res) => {
 // Add, Manage and Delete products
 // Add Company
 router.route('/add')
-    .get(async (req, res) => {        
+    .get(verifyUser, async (req, res) => {        
         try {
             const getProducts = await Product.find({});
             const comp = await Company.find();
@@ -136,5 +137,21 @@ router.post('/update', async (req, res) => {
     res.status(200).json('Hi');
 })
 
+router.get('/receipt', async (req, res) => {
+    if (!req.session.cart) {
+        return res.redirect('/products');
+    }
+    res.render('receipt', { cart: req.session.cart });
+})
+
+router.post('/checkout', async (req, res) => {
+    try {
+        // Store cart in session
+        req.session.cart = req.body.cart;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    } 
+})
 
 export default router;

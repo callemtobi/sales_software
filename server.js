@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import session from 'express-session';
 import multer from 'multer';
 
 // -------------------- Import Routes
@@ -21,6 +22,22 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.json());
+
+// Express session middleware --------- [1]
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false, // Set to true if using HTTPS
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+}))
+
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.session.isLoggedIn || false;
+    next();
+});
 
 // -------------------- Database
 mongoose.connect(process.env.MONGODB_URI);

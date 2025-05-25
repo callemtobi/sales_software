@@ -1,9 +1,11 @@
 import { Router } from "express";
-import Company from "../models/Company.js";
 import _ from 'lodash';
 
+import Company from "../models/Company.js";
+
+
 const router = Router();
-let isLoggedIn = true;
+// let isLoggedIn = false;
 
 // ------------- GET Routes
 router.get('/home', async (req, res) => {
@@ -12,7 +14,7 @@ router.get('/home', async (req, res) => {
     try {
         const comp = await Company.find({});
         // console.log('Data retrieved [companies]: ' + comp);
-        res.render('home', {isLoggedIn, compArray: comp})
+        res.render('home', {isLoggedIn: req.session.isLoggedIn || false, compArray: comp})
     } catch(err) {
         console.log('-----------> Error occured: ' + err);
         res.status(401).json('There has been an error!!!' + err)

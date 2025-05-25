@@ -10,6 +10,30 @@ const cartItems = document.getElementById('cart-items');
 const cartCount = document.getElementById('cart-count');
 const totalPrice = document.getElementById('total-price');
 const navbar = document.querySelector('.navbar');
+document.querySelector('.checkout-btn').addEventListener('click', proceedToCheckout);
+
+// Add this function to handle checkout
+async function proceedToCheckout() {
+    try {
+        const response = await fetch('/products/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cart })
+        });
+        
+        if (response.ok) {
+            window.location.href = '/products/receipt';
+        } else {
+            alert('Checkout failed');
+        }
+    } catch (err) {
+        console.error('Checkout error:', err);
+        alert('Network error during checkout');
+    }
+}
+
 
 // Add to cart function
 function addToCart(id, name, price, image) {

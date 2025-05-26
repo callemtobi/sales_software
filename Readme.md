@@ -1,6 +1,9 @@
 # Sales Software
 A web application that allows store owners to purchase goods from manufacturers.
 
+## A preview
+![Image of the website] (https://imgur.com/a/gHSxnIb)
+
 ## npm Packages
 - express
 - mongoose

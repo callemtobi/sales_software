@@ -2,7 +2,8 @@
 A web application that allows store owners to purchase goods from manufacturers.
 
 ## A preview
-![Image of the website] (https://imgur.com/a/gHSxnIb)
+![Image of the website] (https://i.imgur.com/2DF0m4Y.jpeg)
+![Image of the website] (https://i.imgur.com/7qjY3y3.png)
 
 ## npm Packages
 - express

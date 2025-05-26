@@ -4,6 +4,8 @@ import session from "express-session";
 import User from "../models/User.js";
 import { verifyUser } from "./verify.js";
 
+import sendWelcomeEmail from '../utils/nodemailer.js'
+
 const router = Router();
 
 // ------------- GET Routes
@@ -44,31 +46,34 @@ router.post('/login', async (req, res) => {
 })
 router.post('/register', async (req, res) => {
     const {username, email, password} = req.body;
-    const user = new User({username, email, password});
-
+    
     try {
-        const userExists = await User.findOne({$or: [{username: user.username}, {email: user.email}]});
-
-        if(!userExists) {
-            await User.insertOne(user);
-            console.log('----> User registered');
-            // return res.status(200).json('You have been registered.');
-            return res.redirect('/auth/login');
-        } else if (userExists.username === user.username) {
-            console.log('----> User with that username exists.');
-            return res.status(401).json('User with that username exists.');
-            // return res.redirect('/auth/register');
-        } else if (userExists.email === user.email) {
-            console.log('----> User with that email exists.');
-            return res.status(401).json('User with that email exists.');
-            // return res.redirect('/auth/register');
-        } else { 
-            console.log('-------->Error')
-            // return res.status(401).json('Error has been occured.');
-            // return res.redirect('/auth/register');
+        const userExists = await User.findOne({$or: [{username}, {email}]});
+        if (userExists) {
+            if (userExists.username === username) {
+                console.log('----> User with that username exists.');
+                return res.status(401).json('User already exists.');
+            }
+            if (userExists.email === email) {
+                console.log('----> Email already registered');
+                return res.status(401).json('Email already registered.');
+            }
         }
+        // Create new user
+        const user = new User({username, email, password});
+        await user.save();
+
+        // Send welcome email (don't await to avoid delaying response)
+        sendWelcomeEmail(email, username)
+            .catch(err => console.error('Email sending error:', err));
+
+        // Set success flash message
+        // req.flash('success', 'Registration successful! Please check your email.');
+
+        return res.redirect('/auth/login');        
     } catch (err) {
-        console.log('Error occured: ' + err);
+        console.log('Registration error! ', err);
+        return res.status(500).json('Registration failed! Try again.');
     }
 })
 
